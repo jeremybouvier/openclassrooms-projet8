@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,9 +40,61 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     */
+    private $tasks;
+
+    /**
+     * Task constructor.
+     */
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
+
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getChats()
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * @param Task $tasks
+     * @return User
+     */
+    public function addChat(Task $tasks)
+    {
+        if (!$this->tasks->contains($tasks)) {
+            $this->tasks[] = $tasks;
+            $tasks->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Task $tasks
+     * @return User
+     */
+    public function removeChat(Task $tasks)
+    {
+        if ($this->tasks->contains($tasks)) {
+            $this->tasks->removeElement($tasks);
+            // set the owning side to null (unless already changed)
+            if ($tasks->getUser() === $this) {
+                $tasks->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getUsername()
