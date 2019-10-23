@@ -46,6 +46,11 @@ class User implements UserInterface
     private $tasks;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $formRoles;
+
+    /**
      * Task constructor.
      */
     public function __construct()
@@ -132,9 +137,19 @@ class User implements UserInterface
         $this->email = $email;
     }
 
+    public function setFormRoles($roles)
+    {
+        $this->formRoles = $roles;
+    }
+
+    public function getFormRoles()
+    {
+        return $this->formRoles;
+    }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return [$this->getFormRoles()];
     }
 
     public function eraseCredentials()
