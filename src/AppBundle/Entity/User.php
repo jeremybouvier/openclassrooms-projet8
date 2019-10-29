@@ -46,9 +46,9 @@ class User implements UserInterface
     private $tasks;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="array")
      */
-    private $formRoles;
+    private $roles;
 
     /**
      * Task constructor.
@@ -137,19 +137,14 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function setFormRoles($roles)
+    public function setRoles($roles)
     {
-        $this->formRoles = $roles;
+        $this->roles[0] = $roles;
     }
 
-    public function getFormRoles()
+        public function getRoles()
     {
-        return $this->formRoles;
-    }
-
-    public function getRoles()
-    {
-        return [$this->getFormRoles()];
+        return $this->roles;
     }
 
     public function eraseCredentials()
