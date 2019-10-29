@@ -48,7 +48,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="array")
      */
-    private $roles;
+    private $roles=[];
 
     /**
      * Task constructor.
@@ -139,10 +139,10 @@ class User implements UserInterface
 
     public function setRoles($roles)
     {
-        $this->roles[0] = $roles;
+        $this->roles = $roles;
     }
 
-        public function getRoles()
+    public function getRoles()
     {
         return $this->roles;
     }
