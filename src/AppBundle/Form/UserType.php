@@ -30,7 +30,7 @@ class UserType extends AbstractType
                     'Utilisateur' => 'ROLE_USER'
                 ],
                 'multiple' => true,
-                'expanded' => false,
+                'expanded' => true,
                 'label' => 'Définissez votre role'
             ])
         ;
