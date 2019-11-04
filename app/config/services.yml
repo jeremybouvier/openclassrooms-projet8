@@ -7,6 +7,7 @@ services:
 
     app.deletetask_voter:
       class: AppBundle\Security\DeleteVoter
+      arguments: ['@security.access.decision_manager']
       tags:
         - { name: security.voter }
 
