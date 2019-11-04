@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Security;
 class UserController extends Controller
 {
     /**
-     * @Route("/users", name="user_list")
+     * @Route("/admin/users", name="user_list")
      */
     public function listAction()
     {
@@ -33,7 +33,7 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            $user->setRoles('ROLE_USER');
+            $user->setRoles(['ROLE_USER']);
             $em->persist($user);
             $em->flush();
 
@@ -46,7 +46,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/admin/users/{id}/edit", name="user_edit")
      */
     public function editAction(User $user, Request $request)
     {
