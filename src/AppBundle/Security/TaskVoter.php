@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 
-class DeleteVoter extends Voter
+class TaskVoter extends Voter
 {
     private $decisionManager;
 
