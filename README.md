@@ -1,4 +1,5 @@
-# TodoListe
+# TodoList
+
 
 Réalisation d'une application permettant permettant de consigner des tâches à faire. Chaque utilisateur peut créer son 
 compte. Un utilisateur authentifié peut ajouter, modifier, valider et supprimer ces tâches. Les administrateur peuvent 
@@ -103,3 +104,4 @@ Le versioning du projet a été effectué avec git version 2.7.4 , pour chaque �
 ## Licence
 
 Pas de licence enregistrée.
+
