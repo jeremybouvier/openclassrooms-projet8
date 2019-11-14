@@ -19,7 +19,7 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "symfony/symfony": "3.1.*",
+        "symfony/symfony": "3.1.10",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
@@ -51,6 +51,11 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "initBD": [
+            "bin/console d:d:d --if-exists --force",
+            "bin/console d:d:c ",
+            "bin/console d:s:u -f "
         ]
     },
     "extra": {

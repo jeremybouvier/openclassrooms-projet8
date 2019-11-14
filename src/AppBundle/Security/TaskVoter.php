@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 
-class DeleteVoter extends Voter
+class TaskVoter extends Voter
 {
     private $decisionManager;
 
@@ -50,7 +50,6 @@ class DeleteVoter extends Voter
         if ($user === $subject->getUser()) {
             return true;
         }
-
 
         return false;
     }
