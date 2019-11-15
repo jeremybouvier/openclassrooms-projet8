@@ -23,6 +23,7 @@ class TaskController extends Controller
      */
     public function createAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ROLE');
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
@@ -47,6 +48,7 @@ class TaskController extends Controller
      */
     public function editAction(Task $task, Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ROLE');
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -70,6 +72,7 @@ class TaskController extends Controller
      */
     public function toggleTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('ROLE_ROLE');
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
@@ -83,6 +86,8 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('delete', $task);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
