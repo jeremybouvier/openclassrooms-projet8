@@ -13,6 +13,7 @@ services:
 
       public: false
 
+
     AppBundle\DataFixtures\:
       resource: '../../src/AppBundle/DataFixtures'
       tags: ['doctrine.fixture.orm']
