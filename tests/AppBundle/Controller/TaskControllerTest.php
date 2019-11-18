@@ -96,6 +96,6 @@ class TaskControllerTest extends WebTestCase
         $form = $crawler->selectButton('Supprimer')->form();
         $client->submit($form);
         $crawler= $client->followRedirect();
-        $this->assertEquals(0, $crawler->filter('html:contains("Créé par admin")')->count());
+        $this->assertEquals(10, $crawler->filter('html div.caption:contains("Créé par admin")')->count());
     }
 }
