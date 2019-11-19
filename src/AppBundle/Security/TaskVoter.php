@@ -51,7 +51,9 @@ class TaskVoter extends Voter
             return true;
         }
 
-        return false;
+
+      return false;
     }
 
 }
+
