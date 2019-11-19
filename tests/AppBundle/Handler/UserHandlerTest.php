@@ -3,31 +3,28 @@
 
 namespace Tests\AppBundle\Handler;
 
-
-
-use AppBundle\Entity\Task;
-use AppBundle\Handler\TaskHandler;
+use AppBundle\Entity\User;
+use AppBundle\Handler\UserHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-
-class TaskHandlerTest extends TestCase
+class UserHandlerTest extends TestCase
 {
     /**
-     * Test du handle d'un tache
+     * Test du handle d'un user
      */
-    public function testTaskHandle()
+    public function testUserHandle()
     {
         $entityManager = $this->createMock(EntityManagerInterface::class);
         //$entityManager->method('getEntityState')->willReturn('STATE_NEW');
         $flashbag = $this->createMock(FlashBagInterface::class);
-        $tokenStorage = $this->createMock(TokenStorageInterface::class);
-        $taskHandler = new TaskHandler($entityManager, $flashbag, $tokenStorage);
+        $encoder = $this->createMock(UserPasswordEncoderInterface::class);
+        $userHandler = new UserHandler($entityManager, $flashbag, $encoder);
 
         $form = $this->createMock(FormInterface::class);
         $form->method("isSubmitted")->willReturn(true);
@@ -37,10 +34,10 @@ class TaskHandlerTest extends TestCase
 
         $formFactory = $this->createMock(FormFactoryInterface::class);
         $formFactory->method('create')->willReturn($form);
-        $taskHandler->setFormFactory($formFactory);
+        $userHandler->setFormFactory($formFactory);
         $request = Request::create("/");
 
-        $this->assertTrue($taskHandler->handle($request, new Task()));
+        $this->assertTrue($userHandler->handle($request, new User()));
 
 
     }
