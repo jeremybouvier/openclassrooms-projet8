@@ -36,6 +36,7 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
+        $this->loadTask($manager);
         $this->loadUsers($manager);
         $manager->flush();
     }
@@ -73,13 +74,15 @@ class AppFixtures extends Fixture
      * Création des tâches
      * @param $manager
      */
-    public function loadTask($manager, $user)
+    private function loadTask($manager, $user = null)
     {
         for ($i = 0; $i < 10; $i++) {
             $task = new Task();
             $task->setTitle('task'.$i);
             $task->setContent('task'.$i);
-            $user->addChat($task);
+            if ($user) {
+                $user->addChat($task);
+            }
             $manager->persist($task);
         }
     }

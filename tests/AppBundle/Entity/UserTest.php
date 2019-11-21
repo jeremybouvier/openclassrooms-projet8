@@ -31,6 +31,8 @@ class UserTest extends TestCase
         $user->addChat($task);
         $this->assertNotEmpty($user->getChats());
         $this->assertNull($user->getSalt());
+
+
     }
 
 }
