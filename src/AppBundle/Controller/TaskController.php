@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Form\TaskType;
+use AppBundle\Handler\TaskHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,54 +16,35 @@ class TaskController extends Controller
      */
     public function listAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
     }
 
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, TaskHandler $taskHandler)
     {
-        $this->denyAccessUnlessGranted('ROLE_ROLE');
-        $task = new Task();
-        $form = $this->createForm(TaskType::class, $task);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $task->setUser($this->getUser());
-            $em->persist($task);
-            $em->flush();
-
-            $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($taskHandler->handle($request, new Task())) {
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('task/create.html.twig', ['form' => $taskHandler->createView()]);
     }
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Task $task, Request $request, TaskHandler $taskHandler)
     {
-        $this->denyAccessUnlessGranted('ROLE_ROLE');
-        $form = $this->createForm(TaskType::class, $task);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'La tâche a bien été modifiée.');
-
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        if ($taskHandler->handle($request, $task)) {
             return $this->redirectToRoute('task_list');
         }
 
         return $this->render('task/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $taskHandler->createView(),
             'task' => $task,
         ]);
     }
@@ -72,7 +54,7 @@ class TaskController extends Controller
      */
     public function toggleTaskAction(Task $task)
     {
-        $this->denyAccessUnlessGranted('ROLE_ROLE');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 

@@ -14,7 +14,11 @@
                     </h4>
                     <h4><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
                     <p>{{ task.content }}</p>
-                    <p class="text-muted" style="position: absolute; bottom:20px;"> Créé par {{ task.user.username }}</p>
+                    <p class="text-muted" style="position: absolute; bottom:20px;">
+                        {% if  task.user.username is defined %}
+                        Créé par {{ task.user.username }}
+                        {% endif %}
+                    </p>
                 </div>
                 <div>
                     <form action="{{ path('task_toggle', {'id' : task.id }) }}">
@@ -22,11 +26,13 @@
                             {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
                         </button>
                     </form>
-                     {% if is_granted('delete', task) %}
+
+                    {% if is_granted('delete', task) %}
                         <form action="{{ path('task_delete', {'id' : task.id }) }}">
                             <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
                         </form>
-                     {% endif %}
+                    {% endif %}
+
                 </div>
 
             </div>

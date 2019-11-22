@@ -43,7 +43,7 @@ class TaskVoter extends Voter
             return false;
         }
 
-        if ($this->decisionManager->decide($token, array('ROLE_ADMIN')) && $subject->getUser()->getUsername()==='anonyme') {
+        if ($this->decisionManager->decide($token, array('ROLE_ADMIN')) && $subject->getUser() === null) {
             return true;
         }
 
@@ -51,8 +51,8 @@ class TaskVoter extends Voter
             return true;
         }
 
-
-        return false;
+      return false;
     }
 
 }
+
