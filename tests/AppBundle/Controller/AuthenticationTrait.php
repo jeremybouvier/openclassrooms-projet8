@@ -39,4 +39,9 @@ trait AuthenticationTrait
 
         return $client;
     }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

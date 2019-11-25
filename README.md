@@ -103,4 +103,3 @@ Le versioning du projet a été effectué avec git version 2.7.4 , pour chaque �
 ## Licence
 
 Pas de licence enregistrée.
-

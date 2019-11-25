@@ -25,7 +25,13 @@
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>src/*Bundle/DataFixtures</directory>
+                <directory>src/*Bundle/AppBundle*</directory>
+
             </exclude>
         </whitelist>
     </filter>
+    <listeners>
+        <listener class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitListener" />
+    </listeners>
 </phpunit>

@@ -88,6 +88,7 @@ class User implements UserInterface
     /**
      * @param Task $tasks
      * @return User
+     *
      */
     public function removeChat(Task $tasks)
     {

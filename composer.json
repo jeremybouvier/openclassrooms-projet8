@@ -29,14 +29,19 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "symfony/dependency-injection": "^3.4",
+        "symfony/config": "^3.4",
+        "symfony/yaml": "^3.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "squizlabs/php_codesniffer": "^3.5",
         "sebastian/phpcpd": "^4.1",
-        "phpmetrics/phpmetrics": "^2.4"
+        "phpmetrics/phpmetrics": "^2.4",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "doctrine/data-fixtures": "^1.4",
+        "dama/doctrine-test-bundle": "^6.2"
     },
     "scripts": {
         "symfony-scripts": [
@@ -57,6 +62,14 @@
             "bin/console d:d:d --if-exists --force",
             "bin/console d:d:c ",
             "bin/console d:s:u -f "
+
+        ],
+        "fixtures": [
+            "bin/console d:d:d --if-exists --force",
+            "bin/console d:d:c ",
+            "bin/console d:s:u -f ",
+            "bin/console d:f:l --append"
+
         ]
     },
     "extra": {
