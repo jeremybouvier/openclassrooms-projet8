@@ -32,7 +32,6 @@
         "symfony/dependency-injection": "^3.4",
         "symfony/config": "^3.4",
         "symfony/yaml": "^3.4"
-
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
