@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Security;
-
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\User;
@@ -10,20 +8,33 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-
+/**
+ * Class TaskVoter
+ * @package AppBundle\Security
+ */
 class TaskVoter extends Voter
 {
+    /**
+     * @var AccessDecisionManagerInterface
+     */
     private $decisionManager;
 
+    /**
+     * TaskVoter constructor.
+     * @param AccessDecisionManagerInterface $decisionManager
+     */
     public function __construct(AccessDecisionManagerInterface $decisionManager)
     {
         $this->decisionManager = $decisionManager;
     }
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @return bool
+     */
     protected function supports($attribute, $subject)
     {
-
-
         if (!($attribute === 'delete')) {
             return false;
         }
@@ -35,6 +46,12 @@ class TaskVoter extends Voter
         return true;
     }
 
+    /**
+     * @param string $attribute
+     * @param mixed $subject
+     * @param TokenInterface $token
+     * @return bool
+     */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
         $user = $token->getUser();
@@ -51,8 +68,6 @@ class TaskVoter extends Voter
             return true;
         }
 
-      return false;
+        return false;
     }
-
 }
-

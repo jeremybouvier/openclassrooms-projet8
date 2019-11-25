@@ -48,7 +48,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="array")
      */
-    private $roles=[];
+    private $roles = [];
 
     /**
      * Task constructor.

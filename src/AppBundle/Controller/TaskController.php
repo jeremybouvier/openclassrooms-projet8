@@ -7,12 +7,19 @@ use AppBundle\Form\TaskType;
 use AppBundle\Handler\TaskHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
+    const SUCCESS = 'success';
+    const TASK_LIST = 'task_list';
+
     /**
      * @Route("/tasks/list/{toggle}", name="task_list")
+     * @param int $toggle
+     * @return Response
      */
     public function listAction($toggle = 0)
     {
@@ -29,12 +36,15 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @param Request $request
+     * @param TaskHandler $taskHandler
+     * @return Response
      */
     public function newAction(Request $request, TaskHandler $taskHandler)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         if ($taskHandler->handle($request, new Task())) {
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute(self::TASK_LIST);
         }
 
         return $this->render('task/create.html.twig', [
@@ -44,12 +54,16 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * @param Task $task
+     * @param Request $request
+     * @param TaskHandler $taskHandler
+     * @return Response
      */
     public function editAction(Task $task, Request $request, TaskHandler $taskHandler)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         if ($taskHandler->handle($request, $task)) {
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute(self::TASK_LIST);
         }
 
         return $this->render('task/edit.html.twig', [
@@ -60,6 +74,8 @@ class TaskController extends Controller
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @param Task $task
+     * @return RedirectResponse
      */
     public function toggleTaskAction(Task $task)
     {
@@ -67,13 +83,15 @@ class TaskController extends Controller
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        $this->addFlash(self::SUCCESS, sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute(self::TASK_LIST);
     }
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @param Task $task
+     * @return RedirectResponse
      */
     public function deleteTaskAction(Task $task)
     {
@@ -83,8 +101,8 @@ class TaskController extends Controller
         $em->remove($task);
         $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+        $this->addFlash(self::SUCCESS, 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute(self::TASK_LIST);
     }
 }

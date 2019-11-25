@@ -2,7 +2,6 @@
 
 namespace AppBundle\Handler;
 
-
 use AppBundle\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
@@ -32,8 +31,11 @@ class UserHandler extends AbstractHandler
      * @param FlashBagInterface $flashBag
      * @param UserPasswordEncoderInterface $userPasswordEncoder
      */
-    public function __construct(EntityManagerInterface $entityManager, FlashBagInterface $flashBag, UserPasswordEncoderInterface $userPasswordEncoder)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        UserPasswordEncoderInterface $userPasswordEncoder
+    ) {
         $this->entityManager = $entityManager;
         $this->flashBag = $flashBag;
         $this->userPasswordEncoder = $userPasswordEncoder;
@@ -43,7 +45,7 @@ class UserHandler extends AbstractHandler
      * Donne le type de formulaire
      * @return string
      */
-    protected  function getFormType()
+    protected function getFormType()
     {
         return UserType::class;
     }
