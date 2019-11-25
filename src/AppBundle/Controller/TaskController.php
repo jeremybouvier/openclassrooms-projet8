@@ -12,25 +12,34 @@ use Symfony\Component\HttpFoundation\Request;
 class TaskController extends Controller
 {
     /**
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks/list/{toggle}", name="task_list")
      */
-    public function listAction()
+    public function listAction($toggle = 0)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
+        return $this->render(
+            'task/list.html.twig',
+            [
+                'tasks' => $this->getDoctrine()
+                    ->getRepository('AppBundle:Task')
+                    ->findBy(['isDone' => $toggle])
+            ]
+        );
     }
 
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request, TaskHandler $taskHandler)
+    public function newAction(Request $request, TaskHandler $taskHandler)
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
         if ($taskHandler->handle($request, new Task())) {
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $taskHandler->createView()]);
+        return $this->render('task/create.html.twig', [
+            'form' => $taskHandler->createView()
+        ]);
     }
 
     /**
@@ -45,7 +54,7 @@ class TaskController extends Controller
 
         return $this->render('task/edit.html.twig', [
             'form' => $taskHandler->createView(),
-            'task' => $task,
+            'task' => $task
         ]);
     }
 
