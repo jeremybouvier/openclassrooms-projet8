@@ -15,7 +15,7 @@ class TaskControllerTest extends WebTestCase
     public function testShowTasks()
     {
         $client = $this->createAuthenticatedClient();
-        $crawler = $client->request('GET', '/tasks');
+        $crawler = $client->request('GET', '/tasks/list/0');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
         $this->assertEquals(1, $crawler->filter('html:contains("Créer une tâche")')->count());
     }
@@ -68,12 +68,13 @@ class TaskControllerTest extends WebTestCase
     public function testValidTask()
     {
         $client = $this->createAuthenticatedClient();
-        $crawler = $client->request('GET', '/tasks');
+        $crawler = $client->request('GET', '/tasks/list');
         $form = $crawler->selectButton('Marquer comme faite')->eq(1)->form();
         $client->submit($form);
         $crawler= $client->followRedirect();
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertNotEquals(0, $crawler->filter('html:contains("Marquer non terminée")')
+        $crawler = $client->request('GET', '/tasks/list/1');
+        $this->assertEquals(1, $crawler->filter('html:contains("Marquer non terminée")')
             ->count()
         );
     }
@@ -84,12 +85,13 @@ class TaskControllerTest extends WebTestCase
     public function testUnValidTask()
     {
         $client = $this->createAuthenticatedClient();
-        $crawler = $client->request('GET', '/tasks');
+        $crawler = $client->request('GET', '/tasks/list/1');
         $form = $crawler->selectButton('Marquer non terminée')->form();
         $client->submit($form);
         $crawler= $client->followRedirect();
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertNotEquals(1, $crawler->filter('html:contains("Marquer non terminée")')->eq(1)->count());
+        $crawler = $client->request('GET', '/tasks/list/0');
+        $this->assertNotEquals(101, $crawler->filter('html:contains("Marquer non terminée")')->count());
     }
 
     /**
@@ -98,11 +100,12 @@ class TaskControllerTest extends WebTestCase
     public function testDeleteTask()
     {
         $client = $this->createAuthenticatedClient();
-        $crawler = $client->request('GET', '/tasks');
-        $form = $crawler->selectButton('Supprimer')->eq(11)->form();
+        $crawler = $client->request('GET', '/tasks/list/0');
+        $form = $crawler->selectButton('Supprimer')->eq(20)->form();
         $client->submit($form);
         $crawler= $client->followRedirect();
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertEquals(10, $crawler->filter('html div.caption:contains("Créé par admin")')->count());
+
+        $this->assertEquals(20, $crawler->filter('html button:contains("Supprimer")')->count());
     }
 }

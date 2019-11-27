@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,6 +26,10 @@ class Task
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
+     * @Assert\Length(
+     *     max="30",
+     *     maxMessage="Maximum 20 charactères"
+     * )
      */
     private $title;
 
