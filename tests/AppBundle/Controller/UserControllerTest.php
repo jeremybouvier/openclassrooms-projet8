@@ -70,7 +70,7 @@ class UserControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("Mot de passe")')->count());
 
-        $crawler = $client->request('GET', '/tasks');
+        $crawler = $client->request('GET', '/tasks/list');
         $this->assertSame(302, $client->getResponse()->getStatusCode());
         $crawler = $client->followRedirect();
         $this->assertEquals(1, $crawler->filter('html:contains("Mot de passe")')->count());

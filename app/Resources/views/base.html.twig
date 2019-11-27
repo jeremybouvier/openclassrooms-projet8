@@ -11,7 +11,8 @@
         <title>To Do List app</title>
 
         <!-- Bootstrap Core CSS -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!-- Custom CSS -->
         <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
@@ -25,35 +26,60 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #e3f2fd;" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">To Do List app</a>
-
+                    <a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
                     <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                </div>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{{ path('user_list') }}">Administration</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{{ path('user_create') }}">S'inscrire</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{{ path('task_create') }}">Créer une tâche</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{{ path('task_list', {toggle: 0}) }}">Tâches à faire</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"  href="{{ path('task_list', {toggle: 1}) }}">Tâches Terminées</a>
+                            </li>
+
+                        {% endif %}
+
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>
+                            </li>
+                        {% endif %}
+
+                        {% if not app.user and 'login' != app.request.attributes.get('_route') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('login') }}">Se connecter</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
                 </div>
             </div>
         </nav>
 
         <!-- Page Content -->
         <div class="container">
-            <div class="row">
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('user_list') }}" class="btn btn-primary">Administration</a>
-                {% else %}
-                    <a href="{{ path('user_create') }}" class="btn btn-primary">S'inscrire</a>
-                {% endif %}
-
-
-                {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% endif %}
-
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                {% endif %}
-            </div>
-
             <div class="row">
                 <div class="col-md-12">
                     {% for flash_message in app.session.flashBag.get('success') %}
@@ -96,7 +122,8 @@
 
         </div>
 
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
 </html>

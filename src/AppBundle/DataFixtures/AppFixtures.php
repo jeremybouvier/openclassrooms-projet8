@@ -53,21 +53,19 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function setUser($manager, $name , $i = null)
+    private function setUser($manager, $name, $i = null)
     {
         $user = new User();
-        $user->setUserName($name.$i);
-        $user->setEmail($name.$i.'@gmail.com');
-        $user->setPassword($this->encoder->encodePassword($user,$name.$i));
-        if ($name=='admin') {
+        $user->setUserName($name . $i);
+        $user->setEmail($name . $i . '@gmail.com');
+        $user->setPassword($this->encoder->encodePassword($user, $name . $i));
+        if ($name == 'admin') {
             $user->setRoles(['ROLE_ADMIN']);
-        }
-        else {
+        } else {
             $user->setRoles(['ROLE_USER']);
         }
         $this->loadTask($manager, $user);
         $manager->persist($user);
-
     }
 
     /**
@@ -78,8 +76,8 @@ class AppFixtures extends Fixture
     {
         for ($i = 0; $i < 10; $i++) {
             $task = new Task();
-            $task->setTitle('task'.$i);
-            $task->setContent('task'.$i);
+            $task->setTitle('task' . $i);
+            $task->setContent('task' . $i);
             if ($user) {
                 $user->addChat($task);
             }

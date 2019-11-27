@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Handler;
-
 
 use AppBundle\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,10 +29,13 @@ class TaskHandler extends AbstractHandler
      * TrickHandler constructor.
      * @param EntityManagerInterface $entityManager
      * @param FlashBagInterface $flashBag
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(EntityManagerInterface $entityManager, FlashBagInterface $flashBag, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->entityManager = $entityManager;
         $this->flashBag = $flashBag;
         $this->tokenStorage = $tokenStorage;
@@ -44,7 +45,7 @@ class TaskHandler extends AbstractHandler
      * Donne le type de formulaire
      * @return string
      */
-    protected  function getFormType()
+    protected function getFormType()
     {
         return TaskType::class;
     }

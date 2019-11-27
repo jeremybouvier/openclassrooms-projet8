@@ -3,13 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
 use AppBundle\Handler\UserHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 
 class UserController extends Controller
 {
@@ -20,7 +17,10 @@ class UserController extends Controller
     public function listAction()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+        return $this->render(
+            'user/list.html.twig',
+            ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]
+        );
     }
 
     /**

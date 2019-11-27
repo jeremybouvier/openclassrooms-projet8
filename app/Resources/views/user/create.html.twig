@@ -5,14 +5,16 @@
 
 {% block body %}
     <div class="row">
-        {{ form_start(form, {'action' : path('user_create')}) }}
-        {{ form_widget(form._token) }}
+        <div class="col-12">
+            {{ form_start(form, {'action' : path('user_create')}) }}
+            {{ form_widget(form._token) }}
             {{ form_row(form.username) }}
             {{ form_row(form.password) }}
             {{ form_row(form.email) }}
 
-            <button type="submit" class="btn btn-success pull-right">Ajouter</button>
-        {{ form_end(form, { "render_rest": false }) }}
-
+            <button type="submit" class="col-6 col-lg-2 btn btn-success pull-right">Ajouter</button>
+            <a href="{{ path('homepage') }}" class="col-5 col-lg-2 btn btn-primary">Retour</a>
+            {{ form_end(form, { "render_rest": false }) }}
+        </div>
     </div>
 {% endblock %}

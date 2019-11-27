@@ -16,7 +16,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nom d'utilisateur</th>
-                    <th>Adresse d'utilisateur</th>
+                    <th class="d-none d-sm-block">Adresse d'utilisateur</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -25,7 +25,7 @@
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
+                        <td class="d-none d-sm-block">{{ user.email }}</td>
                         <td>
                             <a href="{{ path('user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Edit</a>
                         </td>
