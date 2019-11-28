@@ -66,6 +66,16 @@ Placez vous dans le dossier TodoList et initialisez la base de donnée en faisan
 ```
 $ composer initBD
 ```
+## Tests automatisés
+
+Avant de lancer les tests automatisés initialisez les fixtures nécessaires en base de données en faisant cette commande à la racine du projet :
+```
+$ composer fixtures
+```
+Puis lancer les tests par la commande :
+```
+$ ./vendor/bin/simple-phpunit
+```
  
 ## Lancement du projet
 
